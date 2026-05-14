@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMTT - Blue Mountains Tours & Travels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bmtt-blue: #1a3c5e;
+            --bmtt-gold: #e8a020;
+            --bmtt-gold-light: #f5b94a;
+            --bmtt-charcoal: #222222;
+            --bmtt-grey: #f5f5f5;
+            --bmtt-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--bmtt-charcoal);
+            background-color: var(--bmtt-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Utility */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--bmtt-gold) 0%, var(--bmtt-gold-light) 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(232, 160, 32, 0.3);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--bmtt-blue);
+            color: white;
+            padding: 8px 0;
+            font-size: 11px;
+            font-weight: 400;
+        }
+
+        .top-bar .social-icons img {
+            width: 14px;
+            margin-right: 15px;
+            filter: invert(1);
+        }
+
+        .top-bar .contact-info span {
+            margin-left: 20px;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Header & Nav */
+        header {
+            position: fixed;
+            top: 31px;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 20px 0;
+        }
+
+        header.scrolled {
+            top: 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo img {
+            width: 140px;
+            transition: width 0.3s ease;
+        }
+
+        header.scrolled .logo img {
+            width: 110px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        header.scrolled nav ul li a {
+            color: var(--bmtt-blue);
+        }
+
+        nav ul li a:hover {
+            color: var(--bmtt-gold);
+        }
+
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        header.scrolled .mobile-toggle {
+            color: var(--bmtt-blue);
+        }
+
+        /* Hero Slideshow */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+        }
+
+        .slide-content span {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 32px;
+            color: var(--bmtt-gold);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .slide-content h2 {
+            font-size: 100px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .slide-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 20px;
+        }
+
+        .dot {
+            font-size: 12px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            color: var(--bmtt-gold);
+            transform: scale(1.2);
+        }
+
+        /* Enquiry Tabs */
+        .enquiry-section {
+            padding: 0 15px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .enquiry-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #999;
+            background: #fafafa;
+            border: none;
+        }
+
+        .tab-btn img {
+            width: 20px;
+            opacity: 0.5;
+        }
+
+        .tab-btn.active {
+            background: var(--bmtt-blue);
+            color: white;
+        }
+
+        .tab-btn.active img {
+            opacity: 1;
+            filter: brightness(0) invert(1);
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-col: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #999;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 13px;
+            background-color: #f9f9f9;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--bmtt-gold);
+        }
+
+        /* Section Styling */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-style: italic;
+            color: var(--bmtt-blue);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #666;
+        }
+
+        /* About Us */
+        .about-section {
+            padding: 100px 0;
+        }
+
+        .featured-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .featured-card {
+            position: relative;
+            height: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .featured-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: white;
+        }
+
+        .featured-card h3 {
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .featured-card p {
+            font-style: italic;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .featured-card .see-more {
+            color: var(--bmtt-gold);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        /* Ratings */
+        .ratings-section {
+            background-color: var(--bmtt-grey);
+            padding: 100px 0;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stars {
+            color: var(--bmtt-gold);
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .reviewer {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reviewer span {
+            color: var(--bmtt-gold);
+            cursor: pointer;
+        }
+
+        /* Prime Attractions */
+        .prime-attractions {
+            padding: 100px 0;
+        }
+
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .attraction-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .attraction-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .attraction-content {
+            padding: 25px;
+        }
+
+        .attraction-content h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .attraction-content p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .attraction-content .read-more {
+            color: var(--bmtt-gold);
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        /* Destinations */
+        .destinations-section {
+            padding: 100px 0;
+            background-color: var(--bmtt-blue);
+            color: white;
+        }
+
+        .destinations-section .section-header h2 {
+            color: white;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .destination-card {
+            position: relative;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .destination-card img.bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .destination-card:hover img.bg {
+            transform: scale(1.1);
+        }
+
+        .destination-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+        }
+
+        .destination-card .icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            filter: invert(1);
+        }
+
+        .destination-card .region {
+            font-size: 10px;
+            color: var(--bmtt-gold);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .destination-card h3 {
+            font-size: 28px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .destination-card p.subtitle {
+            font-style: italic;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Why Choose BMTT */
+        .why-choose {
+            padding: 100px 0;
+        }
+
+        .cert-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .cert-box {
+            text-align: center;
+            background: var(--bmtt-grey);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .cert-box h4 {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--bmtt-blue);
+            margin-bottom: 30px;
+        }
+
+        .cert-logo {
+            width: 100px;
+            margin-bottom: 30px;
+        }
+
+        .cert-doc {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .zoom-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .zoom-btn {
+            background: white;
+            border: 1px solid #ccc;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Map & Contact */
+        .map-section {
+            padding: 100px 0;
+            background: #fafafa;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 450px;
+            margin-bottom: 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-form-grid {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bmtt-blue);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            width: 150px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--bmtt-gold);
+            border-color: var(--bmtt-gold);
+        }
+
+        .social-link img {
+            width: 18px;
+            filter: invert(1);
+        }
+
+        footer h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--bmtt-gold);
+            margin-bottom: 30px;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            padding: 8px 15px;
+            border: 1px solid var(--bmtt-gold);
+            border-radius: 5px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--bmtt-gold);
+            color: white;
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-list li img {
+            width: 20px;
+            filter: invert(1);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #777;
+        }
+
+        .footer-nav a {
+            color: #777;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--bmtt-gold);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 1024px) {
+            .review-grid, .destination-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cert-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-content h2 {
+                font-size: 60px;
+            }
+            .featured-cards, .review-grid, .attraction-grid, .destination-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-bar .container {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .top-bar .contact-info span {
+                margin: 0 10px;
+            }
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            nav.active {
+                display: block;
+            }
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            nav ul li a {
+                color: var(--bmtt-blue);
+            }
+            .mobile-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/share/161HqJds9G/"><img src="https://bmtt.in/images/threads.svg" alt="Facebook" style="filter: brightness(0) invert(1);"></a>
+                <a href="https://instagram.com/bmtt.in?igshid=YmMyMTA2M2Y="><img src="https://bmtt.in/images/threads.svg" alt="Instagram" style="filter: brightness(0) invert(1);"></a>
+            </div>
+            <div class="contact-info">
+                <span>contact@bmtt.in</span>
+                <span>+91 8101641917</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="main-header">
+        <div class="container">
+            <a href="#home" class="logo">
+                <img src="https://bmtt.in/images/logo.png" alt="BMTT Logo">
+            </a>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about-us">About Us</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#attractions">Attractions</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#activities">Activities</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-toggle" onclick="toggleMenu()">
+                &#9776;
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Slides -->
+        <div class="slide active" style="background-image: url('https://bmtt.in/images/gangtok.jpg');">
+            <div class="slide-content">
+                <span>discover</span>
+                <h2>Sikkim</h2>
+                <a href="https://bmtt.in/sikkim" class="btn-gold">explore now</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://bmtt.in/images/lachen007.jpg');">
+            <div class="slide-content">
+                <span>discover</span>
+                <h2>North East</h2>
+                <a href="https://bmtt.in/ne" class="btn-gold">explore now</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://bmtt.in/images/darjeeling-1.jpg');">
+            <div class="slide-content">
+                <span>discover</span>
+                <h2>West Bengal</h2>
+                <a href="https://bmtt.in/wb" class="btn-gold">explore now</a>
+            </div>
+        </div>
+
+        <div class="slide-dots">
+            <div class="dot active" onclick="setSlide(0)">01.</div>
+            <div class="dot" onclick="setSlide(1)">02.</div>
+            <div class="dot" onclick="setSlide(2)">03.</div>
+        </div>
+    </section>
+
+    <!-- Enquiry Tabs Section -->
+    <section class="enquiry-section">
+        <div class="enquiry-card">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab('destination')">
+                    <img src="https://bmtt.in/images/suitcase.png" alt="Suitcase"> Destination
+                </button>
+                <button class="tab-btn" onclick="switchTab('activities')">
+                    <img src="https://bmtt.in/images/diving.png" alt="Diving"> Activities
+                </button>
+                <button class="tab-btn" onclick="switchTab('package')">
+                    <img src="https://bmtt.in/images/milestone_1.png" alt="Package"> Package Enquiry
+                </button>
+            </div>
+            
+            <div id="destination" class="tab-content active">
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email/Phone</label>
+                            <input type="text" placeholder="Contact Details">
+                        </div>
+                        <div class="form-group">
+                            <label>Destination</label>
+                            <select>
+                                <option>NorthEast</option>
+                                <option>Sikkim</option>
+                                <option>West Bengal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Arrival Date</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label>Days</label>
+                            <input type="number" placeholder="Duration">
+                        </div>
+                        <div class="form-group">
+                            <label>People</label>
+                            <input type="number" placeholder="Count">
+                        </div>
+                        <button type="submit" class="btn-gold">Send</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="activities" class="tab-content">
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email/Phone</label>
+                            <input type="text" placeholder="Contact Details">
+                        </div>
+                        <div class="form-group">
+                            <label>Activities</label>
+                            <select>
+                                <option>Paragliding</option>
+                                <option>River Rafting</option>
+                                <option>Ropeway</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Arrival Date</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label>Days</label>
+                            <input type="number" placeholder="Duration">
+                        </div>
+                        <div class="form-group">
+                            <label>People</label>
+                            <input type="number" placeholder="Count">
+                        </div>
+                        <button type="submit" class="btn-gold">Send</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="package" class="tab-content">
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email/Phone</label>
+                            <input type="text" placeholder="Contact Details">
+                        </div>
+                        <div class="form-group">
+                            <label>Package</label>
+                            <select>
+                                <option>Darjeeling Package</option>
+                                <option>Gangtok Package</option>
+                                <option>Gangtok, North Sikkim & Pelling</option>
+                                <option>Honeymoon</option>
+                                <option>Lachen & Lachung Package</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Arrival Date</label>
+                            <input type="date">
+                        </div>
+                        <div class="form-group">
+                            <label>Days</label>
+                            <input type="number" placeholder="Duration">
+                        </div>
+                        <div class="form-group">
+                            <label>People</label>
+                            <input type="number" placeholder="Count">
+                        </div>
+                        <button type="submit" class="btn-gold">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about-us">
+        <div class="container text-center">
+            <div class="section-header">
+                <h2>About Us</h2>
+                <p>Blue Mountains Tours & Travels is the best tourism agency providing travel destinations in Sikkim, Meghalaya, West Bengal and Other North-East States. Our team consists of professionals in tourism which is dedicated to provide the best tour experience for you in the state of Sikkim, Meghalaya, West Bengal and Other North-East.</p>
+            </div>
+
+            <div class="featured-cards">
+                <div class="featured-card">
+                    <img src="https://bmtt.in/images/lachen007.jpg" alt="Gurudongmar Lake">
+                    <div class="overlay">
+                        <p>Highest Lake in the World</p>
+                        <h3>Gurudongmar Lake</h3>
+                        <a href="https://bmtt.in/guru" class="see-more">see more</a>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="https://bmtt.in/images/lachung-1.jpg" alt="Yumthang Valley">
+                    <div class="overlay">
+                        <p>The valley of flowers</p>
+                        <h3>Yumthang Valley</h3>
+                        <a href="https://bmtt.in/yamthan" class="see-more">see more</a>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <img src="https://bmtt.in/images/darjeeling-1.jpg" alt="Darjeeling">
+                    <div class="overlay">
+                        <p>Queen of the Hills</p>
+                        <h3>Darjeeling</h3>
+                        <a href="https://bmtt.in/placedar" class="see-more">see more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ratings Section -->
+    <section class="ratings-section">
+        <div class="container text-center">
+            <div class="section-header">
+                <h2>Ratings</h2>
+            </div>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Thank you so much for the warm welcome and great hospitality on my official Sikkim and Darjeeling tour. Thank you so much for making ..."</p>
+                    <div class="reviewer">Vaibhav Jain <span onclick="window.open('https://goo.gl/maps/2sCDuk1ow3tXUrBY9')">read more</span></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"I would like to share my wonderful experience with the service provider which which i visited Sikkim with my friends in August..."</p>
+                    <div class="reviewer">Vikram Jeet <span onclick="window.open('https://goo.gl/maps/AZJBse1ga8BKytBr9')">read more</span></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Would highly recommend if you're planning to explore sikkim by car. They do arrange travel assistance according to your itinerary..."</p>
+                    <div class="reviewer">Swarna M <span onclick="window.open('https://goo.gl/maps/yDQY9Hgexk7XNfWa7')">read more</span></div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Definitely very good place to visit and with amazing tour organizer. Day to day itinerary was so properly designed according to group and..."</p>
+                    <div class="reviewer">Krunal Patel <span onclick="window.open('https://goo.gl/maps/DYTM5yymcaSP7w2e6')">read more</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prime Attractions Section -->
+    <section class="prime-attractions" id="attractions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Prime Attractions</h2>
+                <p>This landlocked state is endued with a number of the foremost spectacular landscapes, flora and fauna making it a heaven for adventure enthusiasts and naturalists.</p>
+            </div>
+            <div class="attraction-grid">
+                <!-- Attraction 1 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/lachen007.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Nathula Pass</h3>
+                        <p>"Nathula, one in every of the best motorable roads within the world, could be a pass within the Himalayan peaks that co-joins Sikkim and China."</p>
+                        <a href="https://bmtt.in/nathu" class="read-more">read more</a>
+                    </div>
+                </div>
+                <!-- Attraction 2 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/namchi007.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Kamakhya Temple</h3>
+                        <p>"Perched on the Nilachal Hill, Kamakhya Temple is one of India's most sacred Shakti Peethas. The temple's unique tantric..."</p>
+                        <a href="https://bmtt.in/zuluk" class="read-more">read more</a>
+                    </div>
+                </div>
+                <!-- Attraction 3 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/lachen007.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Gurudongmar Lake</h3>
+                        <p>"While the complete Sikkim is situated upon the mountains, we've got a special lake which is elevated 5,430 m from the ocean level"</p>
+                        <a href="https://bmtt.in/guru" class="read-more">read more</a>
+                    </div>
+                </div>
+                <!-- Attraction 4 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/lachung-1.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Yumthang Valley</h3>
+                        <p>"The favored Yumthang Valley in North Sikkim is found 140km north of Gangtok. Famous because of the 'Valley of flowers', hot springs, rivers, yaks..."</p>
+                        <a href="https://bmtt.in/yamthan" class="read-more">read more</a>
+                    </div>
+                </div>
+                <!-- Attraction 5 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/lachen007.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Sela Pass</h3>
+                        <p>"Perched at over 13,000 feet above sea level, Sela Pass is one of the highest motorable roads in India and a lifeline connecting Tawang with the rest of Arunachal Pradesh."</p>
+                        <a href="https://bmtt.in/buddhapark" class="read-more">read more</a>
+                    </div>
+                </div>
+                <!-- Attraction 6 -->
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('https://bmtt.in/images/pelling-1.jpg');"></div>
+                    <div class="attraction-content">
+                        <h3>Pelling Skywalk</h3>
+                        <p>"India's first ever glass skywalk which was inaugurated within the year 2018 is one amongst the foremost desired attraction of the Sikkim."</p>
+                        <a href="https://bmtt.in/sky" class="read-more">read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations-section" id="destinations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Destinations</h2>
+            </div>
+            <div class="destination-grid">
+                <!-- Gangtok -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/gangtok.jpg" alt="Gangtok" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">Sikkim</span>
+                        <h3>Gangtok</h3>
+                        <p class="subtitle">The Heart of Sikkim</p>
+                    </div>
+                </div>
+                <!-- Lachen -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/lachen007.jpg" alt="Lachen" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">Sikkim</span>
+                        <h3>Lachen</h3>
+                        <p class="subtitle">The Big Pass</p>
+                    </div>
+                </div>
+                <!-- Lachung -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/lachung-1.jpg" alt="Lachung" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">Sikkim</span>
+                        <h3>Lachung</h3>
+                        <p class="subtitle">The Small Pass</p>
+                    </div>
+                </div>
+                <!-- Namchi -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/namchi007.jpg" alt="Namchi" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">Sikkim</span>
+                        <h3>Namchi</h3>
+                        <p class="subtitle">The Sky High City</p>
+                    </div>
+                </div>
+                <!-- Pelling -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/pelling-1.jpg" alt="Pelling" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">Sikkim</span>
+                        <h3>Pelling</h3>
+                        <p class="subtitle">Princess of Nature</p>
+                    </div>
+                </div>
+                <!-- Darjeeling -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/darjeeling-1.jpg" alt="Darjeeling" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">West Bengal</span>
+                        <h3>Darjeeling</h3>
+                        <p class="subtitle">Queen of the Hills</p>
+                    </div>
+                </div>
+                <!-- Kalimpong -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/kalimpong-1.jpg" alt="Kalimpong" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">West Bengal</span>
+                        <h3>Kalimpong</h3>
+                        <p class="subtitle">Assembly of the King's Ministers</p>
+                    </div>
+                </div>
+                <!-- Sittong -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/sittong-1.jpg" alt="Sittong" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">West Bengal</span>
+                        <h3>Sittong</h3>
+                        <p class="subtitle">The Orange Village</p>
+                    </div>
+                </div>
+                <!-- Lepcha Jagat -->
+                <div class="destination-card">
+                    <img src="https://bmtt.in/images/lepcha-1.jpg" alt="Lepcha Jagat" class="bg">
+                    <img src="https://bmtt.in/images/backpack.png" alt="icon" class="icon">
+                    <div class="overlay">
+                        <span class="region">West Bengal</span>
+                        <h3>Lepcha Jagat</h3>
+                        <p class="subtitle">The World of the Lepchas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose BMTT Section -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why to Choose BMTT?</h2>
+                <p>We deliver quality service in the most affordable prices. Our service is in the interest of our clients. We are the most flexible team you can travel with. Our team members are local people experienced with every aspect of travel that will give you the most memorable memories in the hills of Sikkim and Darjeeling. Honesty and integrity is our strength and we do not compromise with them. We hope to give you the most of your little time in our beautiful land.</p>
+            </div>
+            <div class="cert-container">
+                <div class="cert-box">
+                    <h4>Registered Under Govt. India</h4>
+                    <img src="https://bmtt.in/images/msme.jpeg" alt="MSME Logo" class="cert-logo">
+                    <div class="cert-doc-wrapper">
+                        <img src="https://bmtt.in/images/msme-docu.png" alt="MSME Document" class="cert-doc" id="cert1">
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" onclick="zoom('cert1', 1.2)">+</button>
+                            <button class="zoom-btn" onclick="zoom('cert1', 0.8)">-</button>
+                            <button class="zoom-btn" onclick="zoom('cert1', 1, true)">R</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-box">
+                    <h4>Registered Under Govt. Of Sikkim</h4>
+                    <img src="https://bmtt.in/images/sikkim.png" alt="Sikkim Govt Logo" class="cert-logo">
+                    <div class="cert-doc-wrapper">
+                        <img src="https://bmtt.in/images/sikkim_reg.jpg" alt="Sikkim Registration" class="cert-doc" id="cert2">
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" onclick="zoom('cert2', 1.2)">+</button>
+                            <button class="zoom-btn" onclick="zoom('cert2', 0.8)">-</button>
+                            <button class="zoom-btn" onclick="zoom('cert2', 1, true)">R</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map & Location Section -->
+    <section class="map-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>LOCATE US!</h2>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3545.2717438287054!2d88.18372031544781!3d27.304682749677934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e6876f2d69372f%3A0x570e1722913bd885!2sBlue%20Mountains%20Tours%20and%20Travels!5e0!3m2!1sen!2sin!4v1662129463768!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="contact-form-grid">
+                <div class="section-header">
+                    <h2>Send Your Queries</h2>
+                </div>
+                <form class="contact-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <input type="text" placeholder="Name" required style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                        <input type="email" placeholder="Email" required style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                    </div>
+                    <textarea placeholder="Message" required style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 20px; min-height: 150px;"></textarea>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn-gold">send message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="https://bmtt.in/footweblogo.png" alt="BMTT Logo" class="footer-logo">
+                    <p>Blue Mountain Tours & Travels have always been committed to it's customers. We take care of every aspect during your arrival till you reach home. Your safety is our topmost priority along with your fun. Contact us for more details.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/161HqJds9G/" class="social-link"><img src="https://bmtt.in/images/threads.svg" alt="Facebook"></a>
+                        <a href="https://instagram.com/bmtt.in?igshid=YmMyMTA2M2Y=" class="social-link"><img src="https://bmtt.in/images/threads.svg" alt="Instagram"></a>
+                        <a href="https://www.threads.com/@bmtt.in" class="social-link"><img src="https://bmtt.in/images/threads.svg" alt="Threads"></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>tags</h4>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">Tourism</a>
+                        <a href="#" class="tag">Sikkim</a>
+                        <a href="#" class="tag">West Bengal</a>
+                        <a href="#" class="tag">Gurudongmar Lake</a>
+                        <a href="#" class="tag">Darjeeling</a>
+                        <a href="#" class="tag">Gangtok</a>
+                        <a href="#" class="tag">M.G. Marg</a>
+                        <a href="#" class="tag">Paragliding</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>contact info</h4>
+                    <ul class="contact-list">
+                        <li><img src="https://bmtt.in/images/placeholder.svg" alt="Loc"> Gangtok, Sikkim</li>
+                        <li><img src="https://bmtt.in/images/phone-call.svg" alt="Tel"> +91 8101641917</li>
+                        <li><img src="https://bmtt.in/images/message.svg" alt="Mail"> contact@bmtt.in</li>
+                        <li><img src="https://bmtt.in/images/planet-earth.svg" alt="Globe"> www.bmtt.in</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>All rights reserved | BMTT | Designed by smartBTR</div>
+                <div class="footer-nav">
+                    <a href="#home">Home</a>
+                    <a href="#about-us">About Us</a>
+                    <a href="#attractions">Attractions</a>
+                    <a href="#">Gallery</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sticky Header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Hero Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+
+        function setSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            setSlide((currentSlide + 1) % totalSlides);
+        }
+
+        let slideInterval = setInterval(nextSlide, 5000);
+
+        function manuallySetSlide(n) {
+            clearInterval(slideInterval);
+            setSlide(n);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Enquiry Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            const activeBtn = document.querySelector(`button[onclick*="'${tabId}'"]`);
+            activeBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('navbar').classList.toggle('active');
+        }
+
+        // Zoom Controls
+        const zoomState = {
+            cert1: 1,
+            cert2: 1
+        };
+
+        function zoom(id, factor, reset = false) {
+            const img = document.getElementById(id);
+            if (reset) {
+                zoomState[id] = 1;
+            } else {
+                zoomState[id] *= factor;
+            }
+            img.style.transform = `scale(${zoomState[id]})`;
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Close menu if open (mobile)
+                document.getElementById('navbar').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
